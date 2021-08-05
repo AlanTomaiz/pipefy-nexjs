@@ -1,14 +1,23 @@
+import { useEffect, useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
+import { useDnd } from '../../hooks/EasyDnd';
 
 import Card from '../Card';
 
 import { Container } from './style';
 
 const List = ({ data }) => {
+  const ref = useRef();
+  const { registerDropzone } = useDnd();
+
   const { title, creatable, cards } = data;
 
+  useEffect(() => {
+    registerDropzone(ref.current);
+  }, []);
+
   return (
-    <Container>
+    <Container ref={ref}>
       <div className="list-header">
         <div className="title">
           <h2>{title}</h2>

@@ -1,25 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  position: relative;
-
-  background: #fff;
-  padding: 15px;
-  border-radius: 5px;
-  border-top: 20px solid rgba(230, 236, 245, 0.4);
-  box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
-
-  user-select: none;
-  cursor: grabbing;
-
-  & + div {
-    margin-top: 10px;
-  }
-
-  header {
-    position: absolute;
-    top: -12px;
-  }
+export const Content = styled.div`
+  color: #999;
+  margin: 8px 0 10px;
 `;
 
 interface LabelProps {
@@ -37,11 +20,6 @@ export const Label = styled.span<LabelProps>`
   padding: 0 10px;
   border-radius: 2px;
   background: ${props => props.color || '#ecf0f1'};
-`;
-
-export const Content = styled.div`
-  color: #999;
-  margin: 8px 0 10px;
 `;
 
 export const Footer = styled.div`
@@ -65,5 +43,42 @@ export const Footer = styled.div`
   img {
     width: 34px;
     border-radius: 4px;
+    pointer-events: none;
+  }
+`;
+
+export const Container = styled.div`
+  position: relative;
+
+  background: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  border-top: 20px solid rgba(230, 236, 245, 0.4);
+  box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
+
+  user-select: none;
+  cursor: pointer;
+
+  & + div {
+    margin-top: 10px;
+  }
+
+  header {
+    position: absolute;
+    top: -12px;
+  }
+
+  &.dragging {
+    border: 2px dashed rgba(0, 0, 0, 0.3);
+    padding: 33px 15px 15px;
+    background: transparent;
+  }
+
+  &.dragging ${Content}, &.dragging ${Footer} .date {
+    color: transparent;
+  }
+
+  &.dragging ${Label}, &.dragging ${Footer} img {
+    display: none;
   }
 `;
