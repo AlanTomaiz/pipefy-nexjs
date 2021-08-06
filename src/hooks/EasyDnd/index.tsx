@@ -1,5 +1,5 @@
 /* eslint no-use-before-define: "off" */
-import React, { useContext, createContext, useCallback, useState } from 'react';
+import React, { useContext, createContext, useCallback } from 'react';
 
 interface IContext {
   registerDraggable(ref: HTMLDivElement): void;
@@ -9,74 +9,74 @@ interface IContext {
 const DndContext = createContext<IContext>({} as IContext);
 
 /** Event Cards */
-function dragStart(event) {
-  const eventX = event.clientX - this.offsetLeft;
-  const eventY = event.clientY - this.offsetTop;
+// function dragStart(event) {
+//   const eventX = event.clientX - this.offsetLeft;
+//   const eventY = event.clientY - this.offsetTop;
 
-  const clone = this.cloneNode(true);
-  clone.id = 'element-dragging';
-  clone.style.display = 'block';
-  clone.style.width = `${this.offsetWidth}px`;
+//   const clone = this.cloneNode(true);
+//   clone.id = 'element-dragging';
+//   clone.style.display = 'block';
+//   clone.style.width = `${this.offsetWidth}px`;
 
-  document.body.appendChild(clone);
+//   document.body.appendChild(clone);
 
-  event.dataTransfer.setDragImage(clone, eventX, eventY);
+//   event.dataTransfer.setDragImage(clone, eventX, eventY);
 
-  this.classList.add('dragging');
-  this.setAttribute('dragging', '');
-}
+//   this.classList.add('dragging');
+//   this.setAttribute('dragging', '');
+// }
 
-function cardDragOver(event) {
-  if (this.hasAttribute('dragging')) {
-    return;
-  }
+// function cardDragOver(event) {
+//   if (this.hasAttribute('dragging')) {
+//     return;
+//   }
 
-  const ulElement = this.closest('ul');
-  const elementHalf = this.offsetHeight / 2;
-  const elementBeingDragged = document.querySelector('.dragging');
+//   const ulElement = this.closest('ul');
+//   const elementHalf = this.offsetHeight / 2;
+//   const elementBeingDragged = document.querySelector('.dragging');
 
-  if (event.layerY < elementHalf) {
-    ulElement.insertBefore(elementBeingDragged, this);
-    return;
-  }
+//   if (event.layerY < elementHalf) {
+//     ulElement.insertBefore(elementBeingDragged, this);
+//     return;
+//   }
 
-  ulElement.insertBefore(elementBeingDragged, this.nextSibling);
-}
+//   ulElement.insertBefore(elementBeingDragged, this.nextSibling);
+// }
 
-function cardDrop() {
-  document.getElementById('element-dragging').remove();
-  const elementBeingDragged = document.querySelector('.dragging');
+// function cardDrop() {
+//   document.getElementById('element-dragging').remove();
+//   const elementBeingDragged = document.querySelector('.dragging');
 
-  elementBeingDragged.classList.remove('dragging');
-  elementBeingDragged.removeAttribute('dragging');
-}
+//   elementBeingDragged.classList.remove('dragging');
+//   elementBeingDragged.removeAttribute('dragging');
+// }
 
-/** Event Lists */
-function ListDragover(event) {
-  if (this.hasAttribute('dragging')) {
-    return;
-  }
+// /** Event Lists */
+// function ListDragover(event) {
+//   if (this.hasAttribute('dragging')) {
+//     return;
+//   }
 
-  const elementBeingDragged = document.querySelector('.dragging');
-  const targetElement = event.target.closest('[draggable]');
-  const ulElement = this.querySelector('ul');
+//   const elementBeingDragged = document.querySelector('.dragging');
+//   const targetElement = event.target.closest('[draggable]');
+//   const ulElement = this.querySelector('ul');
 
-  if (targetElement) {
-    return;
-  }
+//   if (targetElement) {
+//     return;
+//   }
 
-  ulElement.appendChild(elementBeingDragged);
-}
+//   ulElement.appendChild(elementBeingDragged);
+// }
 
 export const DndProvider = ({ children }) => {
   const registerDraggable = useCallback(ref => {
-    ref.addEventListener('dragstart', dragStart);
-    ref.addEventListener('dragover', cardDragOver);
-    ref.addEventListener('dragend', cardDrop);
+    // ref.addEventListener('dragstart', dragStart);
+    // ref.addEventListener('dragover', cardDragOver);
+    // ref.addEventListener('dragend', cardDrop);
   }, []);
 
   const registerDropzone = useCallback(ref => {
-    ref.addEventListener('dragover', ListDragover);
+    // ref.addEventListener('dragover', ListDragover);
   }, []);
 
   return (

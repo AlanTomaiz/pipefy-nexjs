@@ -7,5 +7,5 @@ export interface ICards {
   id: number;
   content: string;
   labels: ILabel[];
-  user: string;
+  user?: string;
 }

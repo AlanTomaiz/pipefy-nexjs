@@ -1,20 +1,21 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
+
 import { useDnd } from '../../hooks/EasyDnd';
+import { IList } from '../../interfaces/IList';
 
 import Card from '../Card';
 
 import { Container } from './style';
 
-const List = ({ data }) => {
+interface ListProps {
+  data: IList;
+}
+
+const List: React.FC<ListProps> = ({ data }) => {
   const ref = useRef();
-  const { registerDropzone } = useDnd();
 
   const { title, creatable, cards } = data;
-
-  useEffect(() => {
-    registerDropzone(ref.current);
-  }, []);
 
   return (
     <Container ref={ref}>
@@ -23,6 +24,7 @@ const List = ({ data }) => {
           <h2>{title}</h2>
           <div className="count">Total: {cards.length}</div>
         </div>
+
         {creatable && (
           <button type="button">
             <MdAdd size="24" color="#fff" />

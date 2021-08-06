@@ -4,4 +4,5 @@ export interface IList {
   title: string;
   creatable: boolean;
   cards: ICards[];
+  done?: boolean;
 }
