@@ -5,7 +5,8 @@ interface ILabel {
 
 export interface ICards {
   id: number;
+  listIndex: number;
   content: string;
   labels: ILabel[];
-  user?: string;
+  user: string;
 }

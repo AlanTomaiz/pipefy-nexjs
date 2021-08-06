@@ -12,9 +12,11 @@ const Board = () => {
 
   return (
     <Container>
-      {lists.map(item => (
-        <List key={item.title} data={item} />
-      ))}
+      {lists.map((item, index) => {
+        const aux = { ...item, index };
+
+        return <List key={item.title} data={aux} />;
+      })}
     </Container>
   );
 };

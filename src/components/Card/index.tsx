@@ -1,17 +1,25 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { MdDateRange } from 'react-icons/md';
-import { useDnd } from '../../hooks/EasyDnd';
+import { useDrag } from '../../hooks/EasyDnd';
 
 import { Container, Label, Content, Footer } from './style';
 
 const Card = ({ data }) => {
+  const { id, listIndex, content, labels, user } = data;
+
+  const { register } = useDrag();
   const ref = useRef();
 
-  const { content, labels, user } = data;
+  useEffect(() => {
+    register({
+      item: { itemId: id, listIndex },
+      ref: ref.current,
+    });
+  }, [register, id, listIndex]);
 
   return (
-    <Container draggable ref={ref}>
+    <Container ref={ref}>
       <header>
         {labels.map(label => (
           <Label key={label.title} color={label.color}>

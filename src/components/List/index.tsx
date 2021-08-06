@@ -1,21 +1,14 @@
 import { useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
 
-import { useDnd } from '../../hooks/EasyDnd';
 import { IList } from '../../interfaces/IList';
-
 import Card from '../Card';
 
 import { Container } from './style';
 
-interface ListProps {
-  data: IList;
-}
-
-const List: React.FC<ListProps> = ({ data }) => {
+const List = ({ data }) => {
   const ref = useRef();
-
-  const { title, creatable, cards } = data;
+  const { index: listIndex, title, creatable, cards } = data as IList;
 
   return (
     <Container ref={ref}>
@@ -32,9 +25,11 @@ const List: React.FC<ListProps> = ({ data }) => {
         )}
       </div>
       <ul>
-        {cards.map(card => (
-          <Card key={card.id} data={card} />
-        ))}
+        {cards.map(card => {
+          const aux = { ...card, listIndex };
+
+          return <Card key={card.id} data={aux} />;
+        })}
       </ul>
     </Container>
   );

@@ -1,6 +1,4 @@
-import { IList } from '../interfaces/IList';
-
-export function loadLists(): IList[] {
+export function loadLists() {
   return [
     {
       title: 'Tarefas',
