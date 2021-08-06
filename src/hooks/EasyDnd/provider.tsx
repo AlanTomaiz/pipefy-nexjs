@@ -11,12 +11,12 @@ export const DndProvider = ({ children }) => {
   const contextId = useUniqueId('esd-provider');
   const registry: Registry = useMemo(CresteRegistry, []);
 
+  useEvents();
+
   const appContext: IContext = useMemo(
     () => ({ contextId, registry }),
     [contextId, registry],
   );
-
-  const unbind = useEvents();
 
   return (
     <ApiContext.Provider value={appContext}>{children}</ApiContext.Provider>

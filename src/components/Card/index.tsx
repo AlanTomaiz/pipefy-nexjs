@@ -8,7 +8,7 @@ import { Container, Label, Content, Footer } from './style';
 const Card = ({ data }) => {
   const { id, listIndex, content, labels, user } = data;
 
-  const { register } = useDrag();
+  const { register, item } = useDrag();
   const ref = useRef();
 
   useEffect(() => {
@@ -17,6 +17,8 @@ const Card = ({ data }) => {
       ref: ref.current,
     });
   }, [register, id, listIndex]);
+
+  console.log(item);
 
   return (
     <Container ref={ref}>

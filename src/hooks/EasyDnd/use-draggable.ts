@@ -23,5 +23,5 @@ export default function useDrag() {
     registry.registerDrag({ uniqueId, dimension, options: item });
   }
 
-  return { register };
+  return { register, item: registry.getDragById(uniqueId) };
 }

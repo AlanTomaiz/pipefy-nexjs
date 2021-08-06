@@ -3,7 +3,7 @@ export type EventBinding = {
   fn: (event: Event) => any;
 };
 
-export default function bindEvent(
+export default function bindEvents(
   elem: HTMLElement | Window,
   bindings: EventBinding[],
 ): () => void {
@@ -16,6 +16,8 @@ export default function bindEvent(
   });
 
   return function unbindAll() {
+    console.log('chamou o unbind');
+
     unbindings.forEach(unbind => {
       unbind();
     });

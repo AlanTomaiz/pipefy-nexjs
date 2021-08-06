@@ -1,18 +1,18 @@
-import { useEffect, useMemo } from 'react';
-import bindEvent, { EventBinding } from './bind-events';
+import { useLayoutEffect, useMemo } from 'react';
+import bindEvents, { EventBinding } from './bind-events';
 
 export default function useEvents() {
   const bindStartDrag: EventBinding = useMemo(
     () => ({
       eventName: 'dragstart',
       fn: function handleDragging(event) {
-        console.log(event.target);
+        // console.log(event.target);
       },
     }),
     [],
   );
 
-  useEffect(() => {
-    bindEvent(window, [bindStartDrag]);
+  useLayoutEffect(() => {
+    bindEvents(window, [bindStartDrag]);
   }, [bindStartDrag]);
 }

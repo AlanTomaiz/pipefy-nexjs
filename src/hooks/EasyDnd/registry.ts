@@ -21,8 +21,10 @@ export default function CresteRegistry(): Registry {
 
   function registerDrag(entry: DraggableEntry): void {
     entries.draggables[entry.uniqueId] = entry;
+  }
 
-    console.log(entries.draggables);
+  function getDragById(id: string): DraggableEntry {
+    return entries.draggables[id];
   }
 
   function clean(): void {
@@ -30,5 +32,5 @@ export default function CresteRegistry(): Registry {
     entries.droppables = {};
   }
 
-  return { registerDrag, clean };
+  return { registerDrag, getDragById, clean };
 }

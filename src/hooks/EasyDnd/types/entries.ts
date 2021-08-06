@@ -20,5 +20,6 @@ export type DropableEntry = {
 
 export type Registry = {
   registerDrag: (entry: DraggableEntry) => void;
+  getDragById: (id: string) => DraggableEntry;
   clean: () => void;
 };
