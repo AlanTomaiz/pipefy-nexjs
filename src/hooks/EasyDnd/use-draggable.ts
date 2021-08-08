@@ -1,27 +1,36 @@
-import { useContext } from 'react';
+import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import { ApiContext } from './contex';
 import useUniqueId from './unique-id';
 
-type IUseDrag = {
-  ref: HTMLDivElement;
-  item: { [key: string]: string | number | boolean };
-};
+type DragOptions = {
+  [key: string]: string | number | boolean;
+}
 
-export default function useDrag() {
+export default function useDrag(fields?: DragOptions) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [item, setItem] = useState(fields);
   const { registry } = useContext(ApiContext);
   const uniqueId = useUniqueId('dnd-test');
 
-  function register(fields: IUseDrag) {
-    const { ref, item } = fields;
+  function register() {
+    console.log('teste ref')
+    console.log(ref)
+    // const { ref, item } = fields;
 
-    const dimension = { width: ref.offsetWidth, height: ref.offsetHeight };
+    // const dimension = { width: ref.offsetWidth, height: ref.offsetHeight };
 
-    // set draggable attribute
-    ref.setAttribute('draggable', 'true');
-    ref.setAttribute('data-draggable-id', uniqueId);
+    // // set draggable attribute
+    // ref.setAttribute('draggable', 'true');
+    // ref.setAttribute('data-draggable-id', uniqueId);
 
-    registry.registerDrag({ uniqueId, dimension, options: item });
+    // registry.registerDrag({ uniqueId, dimension, options: item });
+    // // setData(item);
   }
 
-  return { register, item: registry.getDragById(uniqueId) };
+  useLayoutEffect(() => {
+    register();
+  }, []);
+
+  return [item, ref];
 }
