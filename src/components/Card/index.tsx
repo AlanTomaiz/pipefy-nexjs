@@ -1,5 +1,4 @@
-import { useEffect, useRef } from 'react';
-
+import { useState } from 'react';
 import { MdDateRange } from 'react-icons/md';
 import { useDrag } from '../../hooks/EasyDnd';
 
@@ -7,19 +6,15 @@ import { Container, Label, Content, Footer } from './style';
 
 const Card = ({ data }) => {
   const { id, listIndex, content, labels, user } = data;
+  const [isDragging, setIsDragging] = useState(false);
 
-  const [, ref] = useDrag();
-  // const ref = useRef();
-
-  // useEffect(() => {
-  //   register({
-  //     item: { itemId: id, listIndex },
-  //     ref: ref.current,
-  //   });
-  // }, [register, id, listIndex]);
+  const dragRef = useDrag({
+    item: { card_id: id, list_id: listIndex },
+    collect: ({ isDragging: dragger }) => setIsDragging(dragger),
+  });
 
   return (
-    <Container ref={ref}>
+    <Container ref={dragRef} isDragging={isDragging}>
       <header>
         {labels.map(label => (
           <Label key={label.title} color={label.color}>

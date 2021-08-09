@@ -1,3 +1,5 @@
+export type EntryId = string;
+
 export type EntryDimension = {
   width: number;
   height: number;
@@ -5,12 +7,13 @@ export type EntryDimension = {
 
 export type EntryOption = {
   [key: string]: any;
+  isDragging: boolean;
 };
 
 export type DraggableEntry = {
-  uniqueId: string;
+  uniqueId: EntryId;
   options: EntryOption;
-  dimension: EntryDimension;
+  collect: (monit: EntryOption) => void;
 };
 
 export type DropableEntry = {
@@ -20,6 +23,11 @@ export type DropableEntry = {
 
 export type Registry = {
   registerDrag: (entry: DraggableEntry) => void;
-  getDragById: (id: string) => DraggableEntry;
+  getDragById: (id: EntryId) => DraggableEntry;
   clean: () => void;
+};
+
+export type DragOptions = {
+  item: { [key: string]: string | number | boolean };
+  collect?: (monit: EntryOption) => void;
 };

@@ -13,7 +13,7 @@ export type RegistryEntries = {
   droppables: DroppableMap;
 };
 
-export default function CresteRegistry(): Registry {
+export default function CreateRegistry(): Registry {
   const entries: RegistryEntries = {
     draggables: {},
     droppables: {},

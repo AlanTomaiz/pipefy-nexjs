@@ -5,13 +5,10 @@ import { Registry } from './types/entries';
 import { IContext, ApiContext } from './contex';
 import CresteRegistry from './registry';
 import useUniqueId from './unique-id';
-import useEvents from './use-events';
 
 export const DndProvider = ({ children }) => {
-  const contextId = useUniqueId('esd-provider');
+  const contextId = String(useUniqueId('esd-provider'));
   const registry: Registry = useMemo(CresteRegistry, []);
-
-  useEvents();
 
   const appContext: IContext = useMemo(
     () => ({ contextId, registry }),
