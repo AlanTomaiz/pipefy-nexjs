@@ -10,7 +10,10 @@ const Card = ({ data }) => {
 
   const dragRef = useDrag({
     item: { card_id: id, list_id: listIndex },
-    collect: ({ isDragging: dragger }) => setIsDragging(dragger),
+    collect: ({ isDragging: monit }) => {
+      console.log('monit', monit);
+      setIsDragging(Boolean(monit));
+    },
   });
 
   return (

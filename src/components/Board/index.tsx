@@ -5,7 +5,7 @@ import List from '../List';
 
 import { Container } from './style';
 
-const fakeApi = loadLists();
+const fakeApi = loadLists() as IList[];
 
 const Board = () => {
   const [lists, setList] = useState<IList[]>([...fakeApi]);

@@ -14,13 +14,8 @@ export default function useDrag(fields?: DragOptions): DragRef {
 
   useLayoutEffect(() => {
     const element = ref.current;
-    const sourceId = connector.getHandlerId();
 
-    // set draggable attribute
-    element.setAttribute('draggable', 'true');
-    element.setAttribute('data-draggable-id', String(sourceId));
-
-    monitor.setup();
+    monitor.setup(element);
   }, [connector, monitor]);
 
   return ref;
