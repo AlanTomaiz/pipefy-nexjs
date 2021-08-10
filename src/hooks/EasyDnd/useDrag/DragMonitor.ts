@@ -1,5 +1,8 @@
 /* eslint class-methods-use-this: "off" */
+import { calculateBox } from 'css-box-model';
+
 import { DragConnector } from './DragConnector';
+import { getDraggingStyle } from '../animation';
 import { noop } from '../Utils';
 
 export class DragMonitor {
@@ -30,39 +33,57 @@ export class DragMonitor {
   }
 
   private addEventListeners(element: HTMLElement) {
-    element.addEventListener('mousedown', this.handleDragStart);
+    console.log('testeee');
+    // element.addEventListener('mousedown', this.handleDragStart);
     // element.addEventListener('mouseup', this.handleDragEnd);
     // element.addEventListener('mouseup', this.handleDragEndCaptured);
 
     // element.addEventListener('mousemove', this.handleDragOver);
   }
 
-  private validateDraggableElement(element: HTMLElement): boolean {
-    return element.dataset.isDragging !== undefined;
-  }
+  // private validateDraggableElement(element: HTMLElement): boolean {
+  //   return element.dataset.isDragging !== undefined;
+  // }
 
-  private handleDragStart = () => {
-    const element = this.targetElement;
-    const validElement = this.validateDraggableElement(element);
+  // private handleDragStart = () => {
+  //   const element = this.targetElement;
+  //   const validElement = this.validateDraggableElement(element);
 
-    if (!validElement) {
-      return;
-    }
+  //   if (!validElement) {
+  //     return;
+  //   }
 
-    element.dataset.isDragging = 'true';
+  //   element.dataset.isDragging = 'true';
 
-    this.monitor.setDragging(true);
-    this.handleCollect();
-  };
+  //   this.monitor.setDragging(true);
+  //   this.handleCollect();
+  // };
 
-  // private handleDragOver = event => {
+  // private handleDragOver = (event: MouseEvent) => {
   //   const { isDragging } = this.monitor.getOptions();
 
   //   if (!isDragging) {
   //     return;
   //   }
 
+  //   const { clientX, clientY, offsetX, offsetY } = event;
+
   //   const element = this.targetElement;
+  //   const client = element.getBoundingClientRect();
+  //   const computedStyles = window.getComputedStyle(element);
+
+  //   const { marginBox, borderBox } = calculateBox(client, computedStyles);
+
+  //   const styleProps = {
+  //     offsetX: event.clientX - element.offsetLeft,
+  //     offsetY: event.clientY - element.offsetTop,
+  //     marginBox,
+  //     borderBox,
+  //   };
+
+  //   const styles = getDraggingStyle(styleProps);
+  //   element.setAttribute('style', styles);
+
   //   // element.dataset.isDragging = 'true';
 
   //   // const eventX = event.clientX - element.offsetLeft;
