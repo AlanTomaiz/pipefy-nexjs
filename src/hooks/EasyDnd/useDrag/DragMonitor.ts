@@ -1,12 +1,20 @@
 /* eslint class-methods-use-this: "off" */
-import { calculateBox } from 'css-box-model';
+import { calculateBox, Rect } from 'css-box-model';
 
 import { DragConnector } from './DragConnector';
 import { getDraggingStyle } from '../animation';
-import { noop } from '../Utils';
+
+type TouchCoords = {
+  x: number;
+  y: number;
+  marginBox: Rect;
+  borderBox: Rect;
+};
 
 export class DragMonitor {
   private monitor: DragConnector;
+
+  private touchStart: TouchCoords;
 
   public constructor(manager: DragConnector) {
     this.monitor = manager;
@@ -33,83 +41,53 @@ export class DragMonitor {
   }
 
   private addEventListeners(element: HTMLElement) {
-    console.log('testeee');
-    // element.addEventListener('mousedown', this.handleDragStart);
-    // element.addEventListener('mouseup', this.handleDragEnd);
-    // element.addEventListener('mouseup', this.handleDragEndCaptured);
-
-    // element.addEventListener('mousemove', this.handleDragOver);
+    element.addEventListener('mousedown', this.handleDragStart);
+    element.addEventListener('mousemove', this.handleDragOver);
+    element.addEventListener('mouseup', this.handleDragEnd);
   }
 
-  // private validateDraggableElement(element: HTMLElement): boolean {
-  //   return element.dataset.isDragging !== undefined;
-  // }
+  private handleDragStart = (event: MouseEvent) => {
+    const { pageX, pageY } = event;
+    const element = this.targetElement;
 
-  // private handleDragStart = () => {
-  //   const element = this.targetElement;
-  //   const validElement = this.validateDraggableElement(element);
+    const client = element.getBoundingClientRect();
+    const computedStyles = window.getComputedStyle(element);
 
-  //   if (!validElement) {
-  //     return;
-  //   }
+    const { marginBox, borderBox } = calculateBox(client, computedStyles);
 
-  //   element.dataset.isDragging = 'true';
+    this.touchStart = {
+      x: pageX,
+      y: pageY,
+      marginBox,
+      borderBox,
+    };
+  };
 
-  //   this.monitor.setDragging(true);
-  //   this.handleCollect();
-  // };
+  private handleDragOver = (event: MouseEvent) => {
+    if (!this.touchStart) {
+      return;
+    }
 
-  // private handleDragOver = (event: MouseEvent) => {
-  //   const { isDragging } = this.monitor.getOptions();
+    const { pageX, pageY } = event;
+    const element = this.targetElement;
 
-  //   if (!isDragging) {
-  //     return;
-  //   }
+    const offsetX = pageX - this.touchStart.x;
+    const offsetY = pageY - this.touchStart.y;
 
-  //   const { clientX, clientY, offsetX, offsetY } = event;
+    const auxStyles = {
+      offsetX,
+      offsetY,
+      ...this.touchStart,
+    };
 
-  //   const element = this.targetElement;
-  //   const client = element.getBoundingClientRect();
-  //   const computedStyles = window.getComputedStyle(element);
+    const styles = getDraggingStyle(auxStyles);
+    Object.assign(element.style, styles);
+  };
 
-  //   const { marginBox, borderBox } = calculateBox(client, computedStyles);
+  private handleDragEnd = () => {
+    delete this.touchStart;
 
-  //   const styleProps = {
-  //     offsetX: event.clientX - element.offsetLeft,
-  //     offsetY: event.clientY - element.offsetTop,
-  //     marginBox,
-  //     borderBox,
-  //   };
-
-  //   const styles = getDraggingStyle(styleProps);
-  //   element.setAttribute('style', styles);
-
-  //   // element.dataset.isDragging = 'true';
-
-  //   // const eventX = event.clientX - element.offsetLeft;
-  //   // const eventY = event.clientY - element.offsetTop;
-
-  //   // console.log(event);
-
-  //   // const dragPreview = element.cloneNode(true);
-  //   // dragPreview.id = 'element-dragging';
-  //   // dragPreview.style.display = 'block';
-  //   // dragPreview.style.width = `${element.offsetWidth}px`;
-
-  //   // this.handleCollect();
-  // };
-
-  // private handleDragEndCaptured = () => {
-  //   const element = this.targetElement;
-
-  //   element.removeEventListener('mousemove', noop);
-  // };
-
-  // private handleDragEnd = () => {
-  //   const element = this.targetElement;
-  //   element.dataset.isDragging = 'false';
-
-  //   this.monitor.setDragging(false);
-  //   this.handleCollect();
-  // };
+    const element = this.targetElement;
+    element.removeAttribute('style');
+  };
 }
