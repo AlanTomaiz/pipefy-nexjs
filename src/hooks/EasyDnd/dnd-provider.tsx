@@ -1,12 +1,17 @@
-import { useMemo } from 'react';
+import { useState } from 'react';
+
 import { AppContext } from './dnd-context';
-import CreateRegistry from './state/create-registry';
-import { Registry } from './types';
 
 export const DndProvider = ({ children }) => {
-  const registry: Registry = useMemo(CreateRegistry, []);
+  const [entries, setEntry] = useState({});
+
+  const register = entry => {
+    setEntry({ ...entries, [entry]: 'teste' });
+  };
 
   return (
-    <AppContext.Provider value={{ registry }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ entries, register }}>
+      {children}
+    </AppContext.Provider>
   );
 };

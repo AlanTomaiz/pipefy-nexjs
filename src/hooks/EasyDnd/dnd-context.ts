@@ -1,8 +1,9 @@
 import { createContext } from 'react';
-import { Registry } from './types';
+import { DraggableEntry, DraggableMap } from './types';
 
 export interface IContext {
-  registry: Registry;
+  register: (entry: DraggableEntry) => void;
+  entries: DraggableMap;
 }
 
 export const AppContext = createContext<IContext>({} as IContext);

@@ -1,15 +1,13 @@
 import { MdAdd } from 'react-icons/md';
-import { useDrop } from '../../hooks/EasyDnd';
+import { Draggable } from '../../hooks/EasyDnd';
 
 import Card from '../Card';
 
 import { Container } from './style';
 
 const List = () => {
-  const dropRef = useDrop();
-
   return (
-    <Container ref={dropRef}>
+    <Container>
       <div className="list-header">
         <div className="title">
           <h2>Tarefas</h2>
@@ -21,11 +19,7 @@ const List = () => {
         </button>
       </div>
       <ul>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Draggable>{props => <Card {...props} />}</Draggable>
       </ul>
     </Container>
   );

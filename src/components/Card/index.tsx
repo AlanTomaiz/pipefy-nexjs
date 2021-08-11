@@ -1,13 +1,12 @@
 import { MdDateRange } from 'react-icons/md';
-import { useDrag } from '../../hooks/EasyDnd';
 
 import { Container, Label, Content, Footer } from './style';
 
-const Card = () => {
-  const [elementProps, ref] = useDrag();
+const Card = ({ teste, ...props }) => {
+  console.log(teste);
 
   return (
-    <Container ref={ref} {...elementProps}>
+    <Container {...props}>
       <header>
         <Label color="#7159c1">NICE</Label>
       </header>

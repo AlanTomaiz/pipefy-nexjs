@@ -1,20 +1,18 @@
-import { DraggablePoint, EntryId, Registry } from '../types';
+import { DraggablePoint } from '../types';
 
 export default class DragHandler {
-  private state: Registry;
+  private state: DraggablePoint;
 
-  private sourceId: EntryId;
+  private register;
 
-  constructor(registry, sourceId) {
-    this.state = registry;
-    this.sourceId = sourceId;
+  constructor(state) {
+    this.register = state;
   }
 
   public startMouseDrag(point: DraggablePoint): void {
-    this.state.update({ style: { width: '10px' } }, this.sourceId);
-    // this.state = point;
+    this.state = point;
 
-    // this.bindEvents();
+    this.bindEvents();
   }
 
   onMouseMove = (event: MouseEvent) => {
