@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { EntryId } from './types/entries';
+import { EntryId } from './types';
 
 let count = 0;
 

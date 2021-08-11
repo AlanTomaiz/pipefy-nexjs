@@ -1,35 +1,31 @@
-import { useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
+import { useDrop } from '../../hooks/EasyDnd';
 
-import { IList } from '../../interfaces/IList';
 import Card from '../Card';
 
 import { Container } from './style';
 
-const List = ({ data }) => {
-  const ref = useRef();
-  const { index: listIndex, title, creatable, cards } = data as IList;
+const List = () => {
+  const dropRef = useDrop();
 
   return (
-    <Container ref={ref}>
+    <Container ref={dropRef}>
       <div className="list-header">
         <div className="title">
-          <h2>{title}</h2>
-          <div className="count">Total: {cards.length}</div>
+          <h2>Tarefas</h2>
+          <div className="count">Total: 5</div>
         </div>
 
-        {creatable && (
-          <button type="button">
-            <MdAdd size="24" color="#fff" />
-          </button>
-        )}
+        <button type="button">
+          <MdAdd size="24" color="#fff" />
+        </button>
       </div>
       <ul>
-        {cards.map(card => {
-          const aux = { ...card, listIndex };
-
-          return <Card key={card.id} data={aux} />;
-        })}
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
       </ul>
     </Container>
   );

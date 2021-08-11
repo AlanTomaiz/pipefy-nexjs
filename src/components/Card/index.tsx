@@ -1,37 +1,28 @@
-import { useState } from 'react';
 import { MdDateRange } from 'react-icons/md';
 import { useDrag } from '../../hooks/EasyDnd';
 
 import { Container, Label, Content, Footer } from './style';
 
-const Card = ({ data }) => {
-  const { id, listIndex, content, labels, user } = data;
-  const [isDragging, setIsDragging] = useState(false);
-
-  const dragRef = useDrag({
-    item: { card_id: id, list_id: listIndex },
-    collect: ({ isDragging: monit }) => {
-      console.log('monit', monit);
-      setIsDragging(Boolean(monit));
-    },
-  });
+const Card = () => {
+  const [elementProps, ref] = useDrag();
 
   return (
-    <Container ref={dragRef} isDragging={isDragging}>
+    <Container ref={ref} {...elementProps}>
       <header>
-        {labels.map(label => (
-          <Label key={label.title} color={label.color}>
-            {label.title}
-          </Label>
-        ))}
+        <Label color="#7159c1">NICE</Label>
       </header>
-      <Content>{content}</Content>
+      <Content>
+        Criar vídeo para o Youtube ensinando a recriar a interface do Pipefy
+      </Content>
       <Footer>
         <div className="date">
           <MdDateRange size="24" />
           qua 4 de ago
         </div>
-        {user && <img src={user} alt="Alanderson Tomaiz" />}
+        <img
+          src="https://avatars.githubusercontent.com/u/26505634?v=4"
+          alt="Alanderson Tomaiz"
+        />
       </Footer>
     </Container>
   );

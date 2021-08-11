@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface ContainerProps {
-  isDragging: boolean;
+  isDragging?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
